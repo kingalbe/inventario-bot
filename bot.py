@@ -90,7 +90,7 @@ Inventario actual:
 
     try:
         respuesta = client.messages.create(
-            model="claude-opus-4-5",
+            model="claude-haiku-4-5-20251001",
             max_tokens=1000,
             system=system_prompt,
             messages=[{"role": "user", "content": texto}]
@@ -113,8 +113,8 @@ Inventario actual:
         await update.message.reply_text(data.get("respuesta", "Entendido."))
 
     except Exception as e:
-        logger.error(f"Error: {e}")
-        await update.message.reply_text("Hubo un error procesando tu mensaje. Inténtalo de nuevo.")
+        logger.error(f"Error completo: {type(e).__name__}: {e}", exc_info=True)
+        await update.message.reply_text(f"Error: {type(e).__name__}: {str(e)[:200]}")
 
 def main():
     token = os.environ.get("TELEGRAM_TOKEN")
